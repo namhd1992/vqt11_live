@@ -1276,7 +1276,7 @@ class Lucky_Rotation extends React.Component {
 			</div>
 
 			{/* <!-- The Modal Thông báo hết lượt--> */}
-			<div class="modal fade" id="myModal6" style={{zIndex:10000}}>
+			<div class="modal fade" id="myModal6" style={{zIndex:10001}}>
 				<div class="modal-dialog">
 					<div class="modal-content bg-modal-content border-0">
 					<div class="modal-header border-bottom-0">
