@@ -21,7 +21,7 @@ app.get('/', function(request, response) {
     data = data.replace(/\$OG_URL/g, 'https://khobauScoin.splay.vn/');
     data = data.replace(/\$OG_TYPE/g, "Game");
     data = data.replace(/\$OG_TITLE/g, 'Săn Kho Báu - Mở rương khủng Trúng 50 triệu Scoin');
-    data = data.replace(/\$OG_DESCRIPTION/g, "SK khuyến mại Scoin từ 13/12 - 12/01/2019 dành cho tất cả game thủ VTC Mobile.");
+    data = data.replace(/\$OG_DESCRIPTION/g, "SK khuyến mại Scoin từ 20.12.19 - 20.01.20 dành cho tất cả game thủ VTC Mobile.");
     result = data.replace(/\$OG_IMAGE/g, 'https://i.postimg.cc/SxCSXBKd/share.jpg');
     response.send(result);
   });
