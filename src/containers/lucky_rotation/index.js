@@ -139,6 +139,9 @@ class Lucky_Rotation extends React.Component {
 			user:{},
 			xacthuc:false,
 			status_sukien:'',
+			start:false,
+			live:false,
+			finish: false,
 			turnsBuyInfo:[],
 			soinValue:0,
 			hideNav:false,
@@ -215,14 +218,14 @@ class Lucky_Rotation extends React.Component {
 
 		if (time < start) {
 			this.timeRemain(start)
-			this.setState({ status_sukien: 'Sự kiện chưa diễn ra.', message_status:"Sự kiện chưa diễn ra."});
+			this.setState({ status_sukien: 'Sự kiện chưa diễn ra.', message_status:"Sự kiện chưa diễn ra.", start:true});
 		}
 		if (time > start && time < end) {
 			this.timeRemain(end)
-			this.setState({ status_sukien: "Sự kiện đang diễn ra còn"});
+			this.setState({ status_sukien: "Sự kiện đang diễn ra còn", live:true});
 		}
 		if (time > end) {
-			this.setState({ status_sukien: "Sự kiện đã kết thúc.", message_status:"Sự kiện đã kết thúc."});
+			this.setState({ status_sukien: "Sự kiện đã kết thúc.", message_status:"Sự kiện đã kết thúc.", finish:true});
 		}
 	}
 
@@ -265,97 +268,108 @@ class Lucky_Rotation extends React.Component {
 		var _this = this;
 		var user = JSON.parse(localStorage.getItem("user"));
 		var time=Date.now();
-		if(time > luckySpin.endDate){
-			this.setState({message_status:"Vòng quay đã kết thúc."},()=>{
-				$('#myModal8').modal('show');
-			})
-		}else{
-			if (user !== null) {
-				if(turnsFree>0){
-					this.props.pickCard(user.access_token, luckySpin.id).then(()=>{
-						var data=_this.props.dataPick;
-						var list=this.state.data_auto;
-						
-						if(data!==undefined){
-							if(data.status ==="01"){
-								if(auto){
-									var elem = document.getElementById('auto');
-									list.push(data.data.item.description);
-									this.getDetailData()
-									_this.setState({data_auto: list});
-									elem.scrollTop = elem.scrollHeight;
-									if(data.data.item.type!=="ACTION"){
-										this.setState({noti_tudo:true})
-										this.getVinhDanh(1);	
-									}
-								}else{
-									$('#Khobau').modal('show');
-									setTimeout(() => {
-										if(data.data.item.type!=="ACTION"){
-											$('#myModal4').modal('show');
-											this.setState({noti_tudo:true})
-											this.getVinhDanh(1);
-										}else{
-											$('#myModal7').modal('show');
-										}
-										this.getDetailData();
-										$('#Khobau').modal('hide');
-										_this.setState({itemBonus: data.data.item});
-									}, 1700);
-									
-								}	
-								
-							}else if(data.status ==="04"){
-								$('#myModal13').modal('show');
-							}else if(data.status ==="07"){
-									this.setState({message_status:"Sự kiện chưa diễn ra hoặc đã kết thúc."},()=>{
-									$('#myModal8').modal('show');
-								})
-							}else if(data.status ==="10"){
-								this.setState({message_status:"Bạn cần xác nhận số ĐT để chơi.", xacthuc:true},()=>{
-									$('#myModal8').modal('show');
-								})
-							}else{
-								$('#myModal11').modal('show');
-								this.setState({message_error:'Vòng quay đang có lỗi. Vui lòng tải lại trang.'})
-							}
-						}else{
-							$('#myModal12').modal('show');
-							this.setState({server_err:true})
-						}
-					})
+		if (user !== null) {
+			if(turnsFree>0){
+				this.props.pickCard(user.access_token, luckySpin.id).then(()=>{
+					var data=_this.props.dataPick;
+					var list=this.state.data_auto;
 					
-				}else{
-					$('#myModal6').modal('show');
-				}
-			} else {
-				$('#myModal5').modal('show');
+					if(data!==undefined){
+						if(data.status ==="01"){
+							if(auto){
+								var elem = document.getElementById('auto');
+								list.push(data.data.item.description);
+								this.getDetailData()
+								_this.setState({data_auto: list});
+								elem.scrollTop = elem.scrollHeight;
+								if(data.data.item.type!=="ACTION"){
+									this.setState({noti_tudo:true})
+									this.getVinhDanh(1);	
+								}
+							}else{
+								$('#Khobau').modal('show');
+								setTimeout(() => {
+									if(data.data.item.type!=="ACTION"){
+										$('#myModal4').modal('show');
+										this.setState({noti_tudo:true})
+										this.getVinhDanh(1);
+									}else{
+										$('#myModal7').modal('show');
+									}
+									this.getDetailData();
+									$('#Khobau').modal('hide');
+									_this.setState({itemBonus: data.data.item});
+								}, 1700);
+								
+							}	
+							
+						}else if(data.status ==="04"){
+							$('#myModal13').modal('show');
+						}else if(data.status ==="07"){
+								this.setState({message_status:"Sự kiện chưa diễn ra hoặc đã kết thúc."},()=>{
+								$('#myModal8').modal('show');
+							})
+						}else if(data.status ==="10"){
+							this.setState({message_status:"Bạn cần xác nhận số ĐT để chơi.", xacthuc:true},()=>{
+								$('#myModal8').modal('show');
+							})
+						}else{
+							$('#myModal11').modal('show');
+							this.setState({message_error:'Vòng quay đang có lỗi. Vui lòng tải lại trang.'})
+						}
+					}else{
+						$('#myModal12').modal('show');
+						this.setState({server_err:true})
+					}
+				})
+				
+			}else{
+				$('#myModal6').modal('show');
 			}
+		} else {
+			$('#myModal5').modal('show');
 		}
-		
 	}
 
 	btnStart=()=>{
-		const {server_err}=this.state;
+		const {server_err, start, finish}=this.state;
 		if(server_err){
 			$('#myModal12').modal('show');
 		}else{
-			this.setState({data_auto:[], closeAuto:true},()=>{
-				this.start();
-			})
+			if(start){
+				this.setState({message_status:"Vòng quay chưa diễn ra."},()=>{
+					$('#myModal8').modal('show');
+				})
+			}else if(finish){
+				this.setState({message_status:"Vòng quay đã kết thúc."},()=>{
+					$('#myModal8').modal('show');
+				})
+			}else{
+				this.setState({data_auto:[], closeAuto:true},()=>{
+					this.start();
+				})
+			}
 		}
 	}
 
 
 	autoOpen=()=>{
-		const {turnsFree, luckySpin, server_err}=this.state;
+		const {turnsFree, luckySpin, server_err, start, finish}=this.state;
 		var user = JSON.parse(localStorage.getItem("user"));
 		var time=Date.now();
 		if(server_err){
 			$('#myModal12').modal('show');
 		}else{
 			if (user !== null) {
-				if(time < luckySpin.endDate){
+				if(start){
+					this.setState({message_status:"Vòng quay chưa diễn ra."},()=>{
+						$('#myModal8').modal('show');
+					})
+				}else if(finish){
+					this.setState({message_status:"Vòng quay đã kết thúc."},()=>{
+						$('#myModal8').modal('show');
+					})
+				}else{
 					if(turnsFree>0){
 						$('#Khobau').modal('show');
 						setTimeout(() => {
@@ -369,10 +383,6 @@ class Lucky_Rotation extends React.Component {
 					}else{
 						$('#myModal6').modal('show');
 					}
-				}else{
-					this.setState({message_status:"Vòng quay đã kết thúc."},()=>{
-						$('#myModal8').modal('show');
-					})
 				}
 			} else {
 				$('#myModal5').modal('show');
@@ -576,9 +586,21 @@ class Lucky_Rotation extends React.Component {
 	}
 
 	openThemLuot=()=>{
+		const {start, finish}=this.state;
 		var user = JSON.parse(localStorage.getItem("user"));
 		if (user !== null) {
-			$('#ThemLuot').modal('show');
+			if(start){
+				this.setState({message_status:"Vòng quay chưa diễn ra."},()=>{
+					$('#myModal8').modal('show');
+				})
+				
+			}else if(finish){
+				this.setState({message_status:"Vòng quay đã kết thúc."},()=>{
+					$('#myModal8').modal('show');
+				})
+			}else{
+				$('#ThemLuot').modal('show');
+			}
 		}else {
 			$('#myModal5').modal('show');
 		}
