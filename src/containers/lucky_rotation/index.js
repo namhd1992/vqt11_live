@@ -315,7 +315,7 @@ class Lucky_Rotation extends React.Component {
 							})
 						}else{
 							$('#myModal11').modal('show');
-							this.setState({message_error:'Vòng quay đang có lỗi. Vui lòng tải lại trang.'})
+							this.setState({message_error:'Sự kiện đang có lỗi. Vui lòng tải lại trang.'})
 						}
 					}else{
 						$('#myModal12').modal('show');
@@ -337,11 +337,11 @@ class Lucky_Rotation extends React.Component {
 			$('#myModal12').modal('show');
 		}else{
 			if(start){
-				this.setState({message_status:"Vòng quay chưa diễn ra."},()=>{
+				this.setState({message_status:"Sự kiện chưa diễn ra."},()=>{
 					$('#myModal8').modal('show');
 				})
 			}else if(finish){
-				this.setState({message_status:"Vòng quay đã kết thúc."},()=>{
+				this.setState({message_status:"Sự kiện đã kết thúc."},()=>{
 					$('#myModal8').modal('show');
 				})
 			}else{
@@ -362,11 +362,11 @@ class Lucky_Rotation extends React.Component {
 		}else{
 			if (user !== null) {
 				if(start){
-					this.setState({message_status:"Vòng quay chưa diễn ra."},()=>{
+					this.setState({message_status:"Sự kiện chưa diễn ra."},()=>{
 						$('#myModal8').modal('show');
 					})
 				}else if(finish){
-					this.setState({message_status:"Vòng quay đã kết thúc."},()=>{
+					this.setState({message_status:"Sự kiện đã kết thúc."},()=>{
 						$('#myModal8').modal('show');
 					})
 				}else{
@@ -590,12 +590,12 @@ class Lucky_Rotation extends React.Component {
 		var user = JSON.parse(localStorage.getItem("user"));
 		if (user !== null) {
 			if(start){
-				this.setState({message_status:"Vòng quay chưa diễn ra."},()=>{
+				this.setState({message_status:"Sự kiện chưa diễn ra."},()=>{
 					$('#myModal8').modal('show');
 				})
 				
 			}else if(finish){
-				this.setState({message_status:"Vòng quay đã kết thúc."},()=>{
+				this.setState({message_status:"Sự kiện đã kết thúc."},()=>{
 					$('#myModal8').modal('show');
 				})
 			}else{
