@@ -1017,7 +1017,7 @@ class Lucky_Rotation extends React.Component {
 							</div>        
 							<div class="mx-auto pt-2">
 								<p style={{color:'red', textAlign:"center", marginBottom:10}}>Khi mua vượt quá giới hạn trong ngày, Scoin thừa sẽ được cộng vào ví</p>
-								<p class="text-center w-50 mx-auto mt-3"><a href="http://sandbox.scoin.vn/nap-vao-game?GameId=330335" target="_blank" title="Xác nhận mua"><img src={btn_xac_nhan_mua} class="img-fluid xacNhan" /></a></p>
+								<p class="text-center w-50 mx-auto mt-3"><a href="https://scoin.vn/nap-vao-game?GameId=330335" target="_blank" title="Xác nhận mua"><img src={btn_xac_nhan_mua} class="img-fluid xacNhan" /></a></p>
 							</div>
 						</div>	  
 					</div>
