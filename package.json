@@ -24,7 +24,7 @@
 		"redux-thunk": "^2.2.0"
 	},
 	"scripts": {
-		"startwin": "set HTTPS=true && react-scripts start",
+		"startwin": "set HTTPS=true && react-scripts --max_old_space_size=4096 start",
 		"startlinux": "PORT=3008 react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test --env=jsdom",
