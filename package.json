@@ -25,8 +25,8 @@
 	},
 	"scripts": {
 		"startwin": "set HTTPS=true && react-scripts --max_old_space_size=4096 start",
-		"startlinux": "PORT=3008 react-scripts start",
-		"build": "react-scripts build",
+		"startlinux": "PORT=3008 react-scripts --max_old_space_size=4096 start",
+		"build": "react-scripts --max_old_space_size=4096 build",
 		"test": "react-scripts test --env=jsdom",
 		"eject": "react-scripts eject"
 	}
